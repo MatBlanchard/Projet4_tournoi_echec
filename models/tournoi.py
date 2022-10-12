@@ -1,4 +1,4 @@
-from Models.enumeration import Cadence
+from models.enumeration import Cadence
 
 class Tournoi:
     def __init__(self, nom, lieu, date):

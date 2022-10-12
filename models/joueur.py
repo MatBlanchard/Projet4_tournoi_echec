@@ -1,6 +1,6 @@
 from datetime import *
 from colorama import Fore
-from Models.enumeration import Sexe
+from models.enumeration import Sexe
 
 class Joueur:
     def __init__(self, nom, prenom, dateNaissance, sexe, classement):
