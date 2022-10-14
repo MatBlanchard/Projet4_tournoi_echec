@@ -2,16 +2,18 @@ class Ronde:
     def __init__(self):
         pass
 
+    #Getters
+    @property
+    def matchs(self) -> list:
+        return self.__matchs
+
     #Setters
-    def setMatchs(self, matchs):
+    @matchs.setter
+    def matchs(self, matchs:list):
         if type(matchs) == list:
             self.__matchs = matchs
         else:
-            raise TypeError("argument in Ronde.setMatchs() is not the expected type. Expected type : list")
-
-    #Getters
-    def getMatchs(self):
-        return self.__matchs
+            raise TypeError("argument in Ronde.matchs() is not the expected type. Expected type : list")
 
     def __str__(self):
         return ""

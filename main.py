@@ -1,7 +1,6 @@
-from views import mainView
-
+from views.mainMenu import *
 def main():
-    mainView().show()
+    MainMenu().mainloop()
 
 if __name__=="__main__":
     main()

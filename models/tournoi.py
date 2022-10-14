@@ -1,90 +1,118 @@
+from datetime import date
 from models.enumeration import Cadence
 
 class Tournoi:
-    def __init__(self, nom, lieu, date):
-        self.setNom(nom)
-        self.setLieu(lieu)
-        self.setDate(date)
+    def __init__(self, nom, lieu, date_debut):
+        self.nom = nom
+        self.lieu = lieu
+        self.date_debut = date_debut
+
+    #Getters
+    @property
+    def nom(self) -> str:
+        return self.__nom
+
+    @property
+    def lieu(self) -> str:
+        return self.__lieu
+
+    @property
+    def date_debut(self) -> date:
+        return self.__date_debut
+
+    @property
+    def date_fin(self) -> date:
+        return self.__date_fin
+
+    @property
+    def tour(self) -> int:
+        return self.__tour
+
+    @property
+    def tournees(self) -> list:
+        return self.__tournees
+
+    @property
+    def joueurs(self) -> list:
+        return self.__joueurs
+
+    @property
+    def cadence(self) -> Cadence:
+        return self.__cadence
+
+    @property
+    def description(self) -> str:
+        return self.__description
 
     #Setters
-    def setNom(self, nom):
+    @nom.setter
+    def nom(self, nom):
         if type(nom) == str:
             self.__nom = nom
         else:
-            raise TypeError("argument in Tournoi.setNom() is not the expected type. Expected type : str")
+            raise TypeError("argument in Tournoi.nom() is not the expected type. Expected type : str")
 
-    def setLieu(self, lieu):
+    @lieu.setter
+    def lieu(self, lieu):
         if type(lieu) == str:
             self.__lieu = lieu
         else:
-            raise TypeError("argument in Tournoi.setLieu() is not the expected type. Expected type : str")
+            raise TypeError("argument in Tournoi.lieu() is not the expected type. Expected type : str")
 
-    def setDate(self, date):
-        if type(date) == date:
-            self.__date = date
+    @date_debut.setter
+    def date_debut(self, date_debut):
+        if type(date_debut) == date_debut:
+            self.__date_debut = date_debut
         else:
-            raise TypeError("argument in Tournoi.setDate() is not the expected type. Expected type : date")
+            raise TypeError("argument in Tournoi.date_debut() is not the expected type. Expected type : date")
 
-    def setTour(self, tour=4):
+    @date_fin.setter
+    def date_fin(self, date_fin):
+        if type(date_fin) == date_fin:
+            self.__date_fin = date_fin
+        else:
+            raise TypeError("argument in Tournoi.date_fin() is not the expected type. Expected type : date")
+
+    @tour.setter
+    def tour(self, tour=4):
         if type(tour) == int:
             if tour > 0:
                 self.__tour = tour
             else:
-                raise ValueError("argument in Tournoi.setTourt() is negative or nul. Argument must be a strictly positive integer")
+                raise ValueError("argument in Tournoi.tour() is negative or nul. Argument must be a strictly positive integer")
         else:
-            raise TypeError("argument in Tournoi.setTour() is not the expected type. Expected type : int")
+            raise TypeError("argument in Tournoi.tour() is not the expected type. Expected type : int")
 
-    def setTournees(self, tournees):
+    @tournees.setter
+    def tournees(self, tournees):
         if type(tournees) == list:
             self.__tournees = tournees
         else:
-            raise TypeError("argument in Tournoi.setTournees() is not the expected type. Expected type : list")
+            raise TypeError("argument in Tournoi.tournees() is not the expected type. Expected type : list")
 
-    def setJoueurs(self, joueurs):
+    @joueurs.setter
+    def joueurs(self, joueurs):
         if type(joueurs) == list:
             self.__joueurs = joueurs
         else:
-            raise TypeError("argument in Tournoi.setJoueurs() is not the expected type. Expected type : list")
+            raise TypeError("argument in Tournoi.joueurs() is not the expected type. Expected type : list")
 
-    def setCadence(self, cadence):
+    @cadence.setter
+    def cadence(self, cadence):
         if type(cadence) == Cadence:
             self.__cadence = cadence
         else:
-            raise TypeError("argument in Tournoi.setCadence() is not the expected type. Expected type : Cadence")
+            raise TypeError("argument in Tournoi.cadence() is not the expected type. Expected type : Cadence")
 
-    def setDescription(self, description):
+    @description.setter
+    def description(self, description):
         if type(description) == str:
             self.__description = description
         else:
-            raise TypeError("argument in Tournoi.setDescription() is not the expected type. Expected type : str")
-
-    #Getters
-    def getNom(self):
-        return self.__nom
-
-    def getLieu(self):
-        return self.__lieu
-
-    def getDate(self):
-        return self.__date
-
-    def getTour(self):
-        return self.__tour
-
-    def getTournees(self):
-        return self.__tournees
-
-    def getJoueurs(self):
-        return self.__joueurs
-
-    def getCadence(self):
-        return self.__cadence
-
-    def getDescription(self):
-        return self.__description
+            raise TypeError("argument in Tournoi.description() is not the expected type. Expected type : str")
 
     def __str__(self):
-        return "[nom: " + self.getNom() + " | lieu: " + self.getLieu() + " | date: " + str(self.getDate()) + " | tour: " + str(self.getTour()) + "]"
+        return "[nom: " + self.nom + " | lieu: " + self.lieu + " | date: " + str(self.date_debut) + " | tour: " + str(self.tour) + "]"
 
 def main():
     pass

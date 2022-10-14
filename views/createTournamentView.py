@@ -1,13 +1,15 @@
-from tkinter import *
+from views.mainMenu import *
+from views.view import View
 
-def show():
-    window = Tk()
-    window.resizable(False, False)
-    window.title("Chess tournament")
-    window.mainloop()
+class CreateTournamentView(View):
+    def __init__(self):
+        super().__init__()
+        Button(self, text="Retour", command=lambda:self.navigate("MainMenu")).grid(row=0, column=0)
 
-def main():
-    pass
+    def navigate(self, page):
+        from views.mainMenu import MainMenu
+        self.destroy()
+        if page == "MainMenu":
+            MainMenu().deiconify()
 
-if __name__=="__main__":
-    main()
+
