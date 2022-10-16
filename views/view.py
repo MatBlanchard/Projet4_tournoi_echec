@@ -1,15 +1,18 @@
 from tkinter import *
-
+from models.singleton import Singleton
 
 class View(Tk):
-    __instance = None
-
-    def __new__(cls,*args, **kwargs):
-        if cls.__instance is None :
-            cls.__instance = super(View, cls).__new__(cls, *args, **kwargs)
-        return cls.__instance
-
     def __init__(self):
         super().__init__()
+        self.wm_protocol("WM_DELETE_WINDOW", exit)
         self.resizable(False, False)
         self.title("Tournoi d'échec")
+
+    #Getters
+    @property
+    def h1_font(self):
+        return ("Helvetica", 14, "bold")
+
+    @property
+    def h2_font(self):
+        return ("Helvetica", 11, "bold")

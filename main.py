@@ -1,6 +1,6 @@
 from views.mainMenu import *
 def main():
-    MainMenu().mainloop()
+    Controller().start()
 
 if __name__=="__main__":
     main()

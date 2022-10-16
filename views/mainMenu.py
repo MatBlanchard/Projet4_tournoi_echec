@@ -1,17 +1,14 @@
 from tkinter import *
+from controllers.controller import Controller
 from views.view import View
 
 class MainMenu(View):
     def __init__(self):
         super().__init__()
-        Label(self, text="Que voulez-vous faire?").pack()
-        Button(self, text="Créer un tournoi", command=lambda:self.navigate("CreateTournamentView")).pack(side=LEFT, expand=True)
-        Button(self, text="Charger un tournoi").pack(side=LEFT, expand=True)
-        Button(self, text="Inscrire un joueur").pack(side=LEFT, expand=True)
+        Label(self, text="Page d'acceuil", font=self.h1_font).pack()
+        Button(self, text="Gestion des tournois", command=lambda:Controller().go_to_tournament_view(self)).pack(side=LEFT, expand=True)
+        Button(self, text="Gestion des joueurs", command=lambda:Controller().go_to_player_view(self)).pack(side=LEFT, expand=True)
 
-    def navigate(self, page):
-        from views.createTournamentView import CreateTournamentView
-        self.destroy()
-        if page == "CreateTournamentView":
-            CreateTournamentView().deiconify()
+
+
 

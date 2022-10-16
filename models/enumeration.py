@@ -1,10 +1,15 @@
 from enum import Enum, auto
 
-class Sexe(Enum):
+class ExtendedEnum(Enum):
+    @classmethod
+    def list(cls):
+        return list(map(lambda c: c.name, cls))
+
+class Sexe(ExtendedEnum):
     HOMME = auto()
     FEMME = auto()
 
-class Cadence(Enum):
+class Cadence(ExtendedEnum):
     BULLET = auto()
     BLITZ = auto()
     RAPIDE = auto()
