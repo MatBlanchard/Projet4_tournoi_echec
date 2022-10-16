@@ -1,4 +1,3 @@
-from controllers.controller import Controller
 from models.enumeration import Sexe
 from views.mainMenu import *
 from views.view import View
@@ -6,7 +5,6 @@ from datetime import *
 import calendar
 
 class CreatePlayerView(View):
-    #Constructeur
     def __init__(self):
         super().__init__()
         self.nom = StringVar()

@@ -1,11 +1,25 @@
+from datetime import date
+from tinydb import TinyDB
+from models.enumeration import Sexe
 from models.joueur import Joueur
 from models.singleton import Singleton
 
 class Controller(metaclass=Singleton):
     def __init__(self):
+        self.database = TinyDB("database.json")
+        self.joueursDB = self.database.table("players")
         self.joueurs = []
+        for j in self.joueursDB:
+            self.joueurs.append(Joueur(j["nom"], j["prenom"], date(j["annee_naissance"],j["mois_naissance"],j["jour_naissance"]), Sexe[j["sexe"]], j["classement"]))
 
     #Getters
+    @property
+    def database(self):
+        return self.__database
+    @property
+    def joueursDB(self):
+        return self.__joueursDB
+
     @property
     def main_menu(self):
         return self.__main_menu
@@ -13,6 +27,10 @@ class Controller(metaclass=Singleton):
     @property
     def tournament_view(self):
         return self.__tournament_view
+
+    @property
+    def create_tournament_view(self):
+        return self.__create_tournament_view
 
     @property
     def player_view(self):
@@ -26,12 +44,22 @@ class Controller(metaclass=Singleton):
         return self.__joueurs
 
     #Setters
+    @database.setter
+    def database(self, database):
+        self.__database = database
+    @joueursDB.setter
+    def joueursDB(self, joueursDB):
+        self.__joueursDB = joueursDB
     @main_menu.setter
     def main_menu(self, main_menu):
         self.__main_menu = main_menu
     @tournament_view.setter
     def tournament_view(self, tournament_view):
         self.__tournament_view = tournament_view
+
+    @create_tournament_view.setter
+    def create_tournament_view(self, create_tournament_view):
+        self.__create_tournament_view = create_tournament_view
 
     @player_view.setter
     def player_view(self, player_view):
@@ -50,6 +78,7 @@ class Controller(metaclass=Singleton):
         from views.mainMenu import MainMenu
         self.main_menu = MainMenu()
         self.main_menu.mainloop()
+
     def go_to_main_menu(self, page):
         from views.mainMenu import MainMenu
         page.destroy()
@@ -61,6 +90,12 @@ class Controller(metaclass=Singleton):
         page.destroy()
         self.tournament_view = TournamentView()
         self.tournament_view.mainloop()
+
+    def go_to_create_tournament_view(self, page):
+        from views.createTournamentView import CreateTournamentView
+        page.destroy()
+        self.create_tournament_view = CreateTournamentView()
+        self.create_tournament_view.mainloop()
 
     def go_to_player_view(self, page):
         from views.playerView import PlayerView
@@ -76,3 +111,5 @@ class Controller(metaclass=Singleton):
 
     def create_player(self, nom, prenom, date_naissance, sexe, classement):
         self.joueurs.append(Joueur(nom, prenom, date_naissance, sexe, classement))
+        self.joueursDB.insert({"nom": nom, "prenom": prenom, "jour_naissance": date_naissance.day, "mois_naissance": date_naissance.month, "annee_naissance": date_naissance.year, "sexe":sexe.name, "classement":classement})
+
