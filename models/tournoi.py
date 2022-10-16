@@ -2,10 +2,14 @@ from datetime import date
 from models.enumeration import Cadence
 
 class Tournoi:
-    def __init__(self, nom, lieu, date_debut):
+    def __init__(self, nom, lieu, date_debut, tour, tournees, joueurs, cadence, description):
         self.nom = nom
         self.lieu = lieu
         self.date_debut = date_debut
+        self.tour = tour
+        self.tournees = tournees
+        self.cadence = cadence
+        self.description = description
 
     #Getters
     @property
@@ -74,7 +78,7 @@ class Tournoi:
             raise TypeError("argument in Tournoi.date_fin() is not the expected type. Expected type : date")
 
     @tour.setter
-    def tour(self, tour=4):
+    def tour(self, tour):
         if type(tour) == int:
             if tour > 0:
                 self.__tour = tour
