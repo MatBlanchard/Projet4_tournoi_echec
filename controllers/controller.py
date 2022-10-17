@@ -1,12 +1,18 @@
 from datetime import date
 from tinydb import TinyDB
-from models.enumeration import Sexe
+from models.enumeration import Sexe, Cadence
 from models.joueur import Joueur
 from models.singleton import Singleton
+from models.tournoi import Tournoi
+
 
 class Controller(metaclass=Singleton):
     def __init__(self):
         self.database = TinyDB("database.json")
+        self.tournamentsDB = self.database.table("tournaments")
+        self.tournaments = []
+        for t in self.tournamentsDB:
+            self.tournaments.append(Tournoi(t["nom"], t["lieu"], date(t["annee_debut"],t["mois_debut"],t["jour_debut"]), t["tour"], Cadence[t["cadence"]], t["description"]))
         self.joueursDB = self.database.table("players")
         self.joueurs = []
         for j in self.joueursDB:
@@ -109,7 +115,16 @@ class Controller(metaclass=Singleton):
         self.create_player_view = CreatePlayerView()
         self.create_player_view.mainloop()
 
+    def create_tournament(self, nom, lieu, date_debut, tour, cadence, description):
+        self.tournaments.append(Tournoi(nom, lieu, date_debut, tour, cadence, description))
+        self.tournamentsDB.insert(
+            {"nom": nom, "lieu": lieu, "jour_debut": date_debut.day, "mois_debut": date_debut.month,
+             "annee_debut": date_debut.year, "tour": tour, "cadence": cadence.name, "description": description})
+
     def create_player(self, nom, prenom, date_naissance, sexe, classement):
         self.joueurs.append(Joueur(nom, prenom, date_naissance, sexe, classement))
-        self.joueursDB.insert({"nom": nom, "prenom": prenom, "jour_naissance": date_naissance.day, "mois_naissance": date_naissance.month, "annee_naissance": date_naissance.year, "sexe":sexe.name, "classement":classement})
+        self.joueursDB.insert(
+            {"nom": nom, "prenom": prenom, "jour_naissance": date_naissance.day, "mois_naissance": date_naissance.month,
+             "annee_naissance": date_naissance.year, "sexe":sexe.name, "classement":classement})
+
 

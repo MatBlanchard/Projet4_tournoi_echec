@@ -1,5 +1,7 @@
+from tkinter import *
+
+from controllers.controller import Controller
 from models.enumeration import Sexe
-from views.mainMenu import *
 from views.view import View
 from datetime import *
 import calendar
@@ -108,7 +110,7 @@ class CreatePlayerView(View):
 
     @property
     def month_range(self) -> int:
-        return calendar.monthrange(int(self.__annee_naissance.get()), int(self.__mois_naissance.get()))[1]
+        return calendar.monthrange(int(self.annee_naissance.get()), int(self.mois_naissance.get()))[1]
 
     @property
     def jours(self) -> list:
@@ -186,32 +188,39 @@ class CreatePlayerView(View):
         for i in self.jours:
             jour_naissance["menu"].add_command(label=i, command=lambda i=i:self.jour_naissance.set(i))
 
-    def create_player(self):
-        controller = Controller()
+    def nb_error(self):
+        nb_error = 0
         if self.nom.get() == "" or self.prenom.get() == "" or self.classement.get() == "":
             if self.nom.get() == "":
                 self.nom_error.config(text="Ce champ ne peut pas étre nul")
+                nb_error += 1
             else:
                 self.nom_error.config(text="")
             if self.prenom.get() == "":
                 self.prenom_error.config(text="Ce champ ne peut pas étre nul")
+                nb_error += 1
             else:
                 self.prenom_error.config(text="")
             if self.classement.get() == "":
                 self.classement_error.config(text="Ce champ ne peut pas étre nul")
+                nb_error += 1
             else:
                 self.classement_error.config(text="")
-        try:
-            classement = int(self.classement.get())
-            if classement < 0:
-                self.classement_error.config(text="Le classement doit étre >= 0")
-            else:
-                controller.create_player(self.nom.get(), self.prenom.get(), self.date_naissance, Sexe[self.sexe.get()], classement)
-                controller.go_to_player_view(self)
-        except ValueError:
-            if self.classement.get() != "":
-                self.classement_error.config(text="Le classement doit étre un nombre")
+                try:
+                    classement = int(self.classement.get())
+                    if classement < 0:
+                        self.classement_error.config(text="Le classement doit étre >= 0")
+                        nb_error += 1
+                except ValueError:
+                    self.classement_error.config(text="Le classement doit étre un nombre")
+                    nb_error += 1
+        return nb_error
 
+    def create_player(self):
+        controller = Controller()
+        if self.nb_error() == 0:
+            controller.create_player(self.nom.get(), self.prenom.get(), self.date_naissance, Sexe[self.sexe.get()], int(self.classement.get()))
+            controller.go_to_player_view(self)
 
 def main():
     CreatePlayerView().mainloop()

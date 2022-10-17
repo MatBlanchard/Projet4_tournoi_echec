@@ -1,5 +1,4 @@
 from tkinter import *
-from models.singleton import Singleton
 
 class View(Tk):
     def __init__(self):
