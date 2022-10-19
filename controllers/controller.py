@@ -16,6 +16,7 @@ class Controller(metaclass=Singleton):
         self.joueurs = []
         for j in self.joueursDB:
             self.joueurs.append(Joueur(j["nom"], j["prenom"], date(j["annee_naissance"],j["mois_naissance"],j["jour_naissance"]), Sexe[j["sexe"]], j["classement"]))
+        self.sort_joueurs()
 
     #Getters
     @property
@@ -36,6 +37,10 @@ class Controller(metaclass=Singleton):
     @property
     def create_tournament_view(self):
         return self.__create_tournament_view
+
+    @property
+    def load_tournament_view(self):
+        return self.__load_tournament_view
 
     @property
     def add_players_view(self):
@@ -70,6 +75,10 @@ class Controller(metaclass=Singleton):
     def create_tournament_view(self, create_tournament_view):
         self.__create_tournament_view = create_tournament_view
 
+    @load_tournament_view.setter
+    def load_tournament_view(self, load_tournament_view):
+        self.__load_tournament_view = load_tournament_view
+
     @add_players_view.setter
     def add_players_view(self, add_players_view):
         self.__add_players_view = add_players_view
@@ -87,6 +96,27 @@ class Controller(metaclass=Singleton):
         self.__joueurs = joueurs
 
     #Méthodes
+    def joueurs_sorted(self):
+        sorted = True
+        for i in range(len(self.joueurs) - 1):
+            if self.joueurs[i].nom > self.joueurs[i + 1].nom:
+                sorted = False
+            elif self.joueurs[i].nom == self.joueurs[i + 1].nom and self.joueurs[i].prenom > self.joueurs[i + 1].prenom:
+                sorted = False
+        return sorted
+
+    def sort_joueurs(self):
+        while not self.joueurs_sorted():
+            for i in range(len(self.joueurs) - 1):
+                if self.joueurs[i].nom > self.joueurs[i + 1].nom:
+                    temp = self.joueurs[i]
+                    self.joueurs[i] = self.joueurs[i + 1]
+                    self.joueurs[i + 1] = temp
+                elif self.joueurs[i].nom == self.joueurs[i + 1].nom and self.joueurs[i].prenom > self.joueurs[i + 1].prenom:
+                    temp = self.joueurs[i]
+                    self.joueurs[i] = self.joueurs[i + 1]
+                    self.joueurs[i + 1] = temp
+
     def start(self):
         from views.mainMenu import MainMenu
         self.main_menu = MainMenu()
@@ -109,6 +139,12 @@ class Controller(metaclass=Singleton):
         page.destroy()
         self.create_tournament_view = CreateTournamentView()
         self.create_tournament_view.mainloop()
+
+    def go_to_load_tournament_view(self, page, tournament):
+        from views.loadTournamentView import LoadTournamentView
+        page.destroy()
+        self.load_tournament_view = LoadTournamentView(tournament)
+        self.load_tournament_view.mainloop()
 
     def go_to_add_players_view(self, page, tournament):
         from views.addPlayersView import AddPlayersView

@@ -26,6 +26,6 @@ class TournamentView(View):
             if t.joueurs == []:
                 Button(self, text="Ajouter joueurs", command=lambda t=t: Controller().go_to_add_players_view(self, t)).grid(row=i, column=7, padx=(10, 10))
             else:
-                print(t.joueurs)
+                Button(self, text="Charger le tournoi", command=lambda t=t: Controller().go_to_load_tournament_view(self, t)).grid(row=i, column=7, padx=(10, 10))
             i += 1
 

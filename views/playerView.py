@@ -21,9 +21,3 @@ class PlayerView(View):
             Label(self, text=j.sexe.name).grid(row=i, column=3)
             Label(self, text=j.classement).grid(row=i, column=4)
             i += 1
-
-def main():
-    PlayerView().mainloop()
-
-if __name__=="__main__":
-    main()
