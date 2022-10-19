@@ -13,3 +13,4 @@ class Cadence(ExtendedEnum):
     BULLET = auto()
     BLITZ = auto()
     RAPIDE = auto()
+    LONGUE = auto()

@@ -1,4 +1,4 @@
-from views.mainMenu import *
+from controllers.controller import Controller
 def main():
     Controller().start()
 

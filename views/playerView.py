@@ -1,5 +1,5 @@
 from controllers.controller import Controller
-from views.mainMenu import *
+from tkinter import *
 from views.view import View
 
 class PlayerView(View):

@@ -9,6 +9,7 @@ class Tournoi:
         self.tour = tour
         self.cadence = cadence
         self.description = description
+        self.joueurs = []
 
     #Getters
     @property

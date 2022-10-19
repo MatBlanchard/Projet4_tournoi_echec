@@ -1,5 +1,4 @@
 from tkinter import *
-
 from controllers.controller import Controller
 from models.enumeration import Sexe
 from views.view import View

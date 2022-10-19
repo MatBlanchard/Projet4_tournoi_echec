@@ -5,7 +5,6 @@ from models.joueur import Joueur
 from models.singleton import Singleton
 from models.tournoi import Tournoi
 
-
 class Controller(metaclass=Singleton):
     def __init__(self):
         self.database = TinyDB("database.json")
@@ -39,6 +38,10 @@ class Controller(metaclass=Singleton):
         return self.__create_tournament_view
 
     @property
+    def add_players_view(self):
+        return self.__add_players_view
+
+    @property
     def player_view(self):
         return self.__player_view
 
@@ -66,6 +69,10 @@ class Controller(metaclass=Singleton):
     @create_tournament_view.setter
     def create_tournament_view(self, create_tournament_view):
         self.__create_tournament_view = create_tournament_view
+
+    @add_players_view.setter
+    def add_players_view(self, add_players_view):
+        self.__add_players_view = add_players_view
 
     @player_view.setter
     def player_view(self, player_view):
@@ -103,6 +110,12 @@ class Controller(metaclass=Singleton):
         self.create_tournament_view = CreateTournamentView()
         self.create_tournament_view.mainloop()
 
+    def go_to_add_players_view(self, page, tournament):
+        from views.addPlayersView import AddPlayersView
+        page.destroy()
+        self.add_players_view = AddPlayersView(tournament)
+        self.add_players_view.mainloop()
+
     def go_to_player_view(self, page):
         from views.playerView import PlayerView
         page.destroy()
@@ -126,5 +139,6 @@ class Controller(metaclass=Singleton):
         self.joueursDB.insert(
             {"nom": nom, "prenom": prenom, "jour_naissance": date_naissance.day, "mois_naissance": date_naissance.month,
              "annee_naissance": date_naissance.year, "sexe":sexe.name, "classement":classement})
+
 
 
