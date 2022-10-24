@@ -1,6 +1,6 @@
 class Player:
-    def __init__(self, id, name, first_name, date_of_birth, sex, rank=1):
-        self.id = id
+    def __init__(self, nb, name, first_name, date_of_birth, sex, rank=1):
+        self.id = nb
         self.name = name
         self.first_name = first_name
         self.date_of_birth = date_of_birth
