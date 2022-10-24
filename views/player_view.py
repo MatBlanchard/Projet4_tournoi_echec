@@ -11,29 +11,22 @@ class CreatePlayer(View, metaclass=Singleton):
         dob = self.dob_input()
         sex = self.sex_input()
         rank = self.rank_input()
-        Controller().players.append(Player(len(Controller().players)+1, name, first_name, dob, sex, rank))
-        player = {
-            "id": len(Controller().players),
-            "name": name,
-            "first_name": first_name,
-            "date_of_birth": dob,
-            "sex": sex,
-            "rank": rank,
-        }
-        Controller().save_player(player)
+        Controller().create_player(name, first_name, dob, sex, rank)
 
+
+    # Inputs
     def dob_input(self):
         while True:
-            value = input("Date de naissance (format DD/MM/YYYY):\n>")
-            if self.verify_date(value):
-                return value
-            else:
-                print("Veuillez entrer une date au format valide: DD/MM/YYYY")
+            value = input("Date de naissance (format DD-MM-YYYY):\n>")
+            try:
+                return self.get_date(value)
+            except ValueError:
+                print("Veuillez entrer une date au format valide: DD-MM-YYYY")
 
     @staticmethod
     def sex_input():
         while True:
-            value = "Sexe (H ou F):\n>"
+            value = input("Sexe (H ou F):\n>")
             if value in ["H", "h", "F", "f"]:
                 return value.upper()
             else:
@@ -50,19 +43,19 @@ class CreatePlayer(View, metaclass=Singleton):
                     print("Veuillez entrer une valeur supérieure à 0")
             else:
                 print("Veuillez entrer une valeur numérique valide.")
-
+    ##################################################################
 
 class LoadPlayer(View, metaclass=Singleton):
     def show(self):
         from controllers.controller import Controller
         print("Voici la liste des joueurs:")
         for p in Controller().players:
-            print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " + p.date_of_birth
-                  + " | sexe: " + p.first_name + " | classement: " + p.rank)
-        self.player_input()
+            print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " + p.date_of_birth.strftime("%d/%m/%Y")
+                  + " | sexe: " + p.sex + " | classement: " + str(p.rank))
+        self.leave_input()
 
     @staticmethod
-    def player_input():
+    def leave_input():
         while True:
             value = input("r - retour:\n>")
             if value == "r":

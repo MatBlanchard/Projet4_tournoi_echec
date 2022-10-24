@@ -1,17 +1,26 @@
-
+from datetime import *
 
 class View:
     @staticmethod
-    def verify_date(date):
-        if "/" not in date:
+    def get_date(value):
+        if "-" not in value:
+            raise ValueError("Expected format : DD-MM-YYYY")
+        values = value.split("-")
+        return date(int(values[2]), int(values[1]), int(values[0]))
+
+    @staticmethod
+    def verify_hour(hour):
+        if ":" not in hour:
             return False
         else:
-            date = date.split("/")
-            if len(date) != 3:
+            hour = hour.split(":")
+            if len(hour) != 2:
                 return False
-            for d in date:
-                if not d.isnumeric():
+            for h in hour:
+                if not h.isnumeric():
                     return False
-            if len(str(date[0])) != 2 or len(str(date[1])) != 2 or len(str(date[2])) != 4:
+            if int(hour[0]) < 0 or int(hour[1]) < 0:
+                return False
+            if int(hour[0]) > 23 or int(hour[1]) > 59:
                 return False
             return True
