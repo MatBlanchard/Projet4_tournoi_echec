@@ -15,3 +15,7 @@ class Match:
             "players": players_id,
             "scores": self.scores,
         }
+
+    def __str__(self):
+        return self.players[0].name + ": " + str(self.scores[0]) + \
+               ", " + self.players[1].name + ": " + str(self.scores[1])

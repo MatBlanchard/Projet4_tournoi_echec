@@ -9,23 +9,6 @@ class View:
         values = value.split("-")
         return date(int(values[2]), int(values[1]), int(values[0]))
 
-    @staticmethod
-    def verify_hour(hour):
-        if ":" not in hour:
-            return False
-        else:
-            hour = hour.split(":")
-            if len(hour) != 2:
-                return False
-            for h in hour:
-                if not h.isnumeric():
-                    return False
-            if int(hour[0]) < 0 or int(hour[1]) < 0:
-                return False
-            if int(hour[0]) > 23 or int(hour[1]) > 59:
-                return False
-            return True
-
     # Sorting
     def rank_sorted(self, players):
         for i in range(len(players) - 1):
@@ -41,6 +24,29 @@ class View:
                     players[i] = players[i + 1]
                     players[i + 1] = temp
         return players
+
+    def score_sorted(self, tournament):
+        for i in range(len(tournament.players) - 1):
+            if tournament.players[i].get_score(tournament) < tournament.players[i+1].get_score(tournament):
+                return False
+            elif tournament.players[i].get_score(tournament) == tournament.players[i+1].get_score(tournament) \
+                    and tournament.players[i].rank < tournament.players[i+1].rank:
+                return False
+        return True
+
+    def score_sort(self, tournament):
+        while not self.score_sorted(tournament):
+            for i in range(len(tournament.players) - 1):
+                if tournament.players[i].get_score(tournament) < tournament.players[i+1].get_score(tournament):
+                    temp = tournament.players[i]
+                    tournament.players[i] = tournament.players[i + 1]
+                    tournament.players[i + 1] = temp
+                elif tournament.players[i].get_score(tournament) == tournament.players[i + 1].get_score(tournament) \
+                        and tournament.players[i].rank < tournament.players[i + 1].rank:
+                    temp = tournament.players[i]
+                    tournament.players[i] = tournament.players[i + 1]
+                    tournament.players[i + 1] = temp
+        return tournament.players
 
     def alphabetical_sorted(self, players):
         for i in range(len(players) - 1):

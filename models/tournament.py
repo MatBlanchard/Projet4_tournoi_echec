@@ -3,7 +3,7 @@ from datetime import *
 
 class Tournament:
     def __init__(self, id, name, place, starting_date, time_control, players, nb_rounds=4, description="", rounds=None,
-                 ending_date=None):
+                 ending_date=date(year=1, month=1, day=1)):
         self.id = id
         self.name = name
         self.place = place
@@ -14,8 +14,9 @@ class Tournament:
         self.description = description
         if rounds is None:
             self.rounds = []
-        if ending_date is None:
-            self.ending_date = date(year=1, month=1, day=1)
+        else:
+            self.rounds = rounds
+        self.ending_date = ending_date
 
     def serialized(self):
         players_id = []
@@ -40,7 +41,7 @@ class Tournament:
                             self.ending_date.month,
                             self.ending_date.day]
         }
-    def has_played_together(self, player1, player2):
+    def has_played(self, player1, player2):
         for r in self.rounds:
             for m in r.matchs:
                 if (player1 in m.players) and (player2 in m.players):

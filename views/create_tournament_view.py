@@ -12,8 +12,7 @@ class CreateTournament(View, metaclass=Singleton):
         time_control = self.time_control_input()
         nb_players = self.nb_players_input()
         players = self.players_input(nb_players)
-        nb_matchs = int(nb_players / 2)
-        nb_rounds = self.nb_rounds_input(nb_matchs)
+        nb_rounds = self.nb_rounds_input(nb_players)
         description = input("Description:\n>")
         Controller().create_tournament(name, place, starting_date, time_control, players, nb_rounds, description)
         if not self.play_input():
@@ -70,7 +69,7 @@ class CreateTournament(View, metaclass=Singleton):
                     if p not in players:
                         display += str(p) + "\n"
                         assertions.append(str(p.id))
-                value = input(display)
+                value = input(display + ">")
                 if value in assertions:
                     players.append(Controller().get_player_by_id(int(value)))
                 else:
@@ -78,17 +77,17 @@ class CreateTournament(View, metaclass=Singleton):
                     continue
             return players
 
-    def nb_rounds_input(self, nb_matchs):
+    def nb_rounds_input(self, nb_players):
         while True:
-            if nb_matchs == 1:
+            if nb_players == 2:
                 return 1
             else:
                 value = input("Nombre de tour :\n>")
                 if value.isnumeric():
-                    if 0 < int(value) <= nb_matchs:
+                    if 0 < int(value) <= nb_players:
                         return int(value)
                     else:
-                        print("Veuillez entrer une valeur entre 1 et " + nb_matchs)
+                        print("Veuillez entrer une valeur entre 1 et " + str(nb_players-1))
                 else:
                     print("Veuillez entrer une valeur numérique valide.")
 

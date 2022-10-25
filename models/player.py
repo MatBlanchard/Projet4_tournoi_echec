@@ -17,5 +17,14 @@ class Player:
             "rank": self.rank
         }
 
+    def get_score(self, tournament):
+        score = 0
+        for r in tournament.rounds:
+            for m in r.matchs:
+                if m.players[0] == self:
+                    score += m.scores[0]
+                elif m.players[1] == self:
+                    score += m.scores[1]
+        return score
     def __str__(self):
         return str(self.id) + " - " + self.name + " | " + self.first_name

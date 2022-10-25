@@ -109,15 +109,15 @@ class Controller(metaclass=Singleton):
             rounds.append(Round(id=r["id"],
                                 name=r["name"],
                                 starting_datetime=datetime(year=r["starting_datetime"][0],
-                                                           month=r["starting_date"][1],
-                                                           day=r["starting_date"][2],
-                                                           hour=r["starting_date"][3],
-                                                           minute=r["starting_date"][4]),
+                                                           month=r["starting_datetime"][1],
+                                                           day=r["starting_datetime"][2],
+                                                           hour=r["starting_datetime"][3],
+                                                           minute=r["starting_datetime"][4]),
                                 ending_datetime=datetime(year=r["ending_datetime"][0],
-                                                         month=r["ending_date"][1],
-                                                         day=r["ending_date"][2],
-                                                         hour=r["ending_date"][3],
-                                                         minute=r["ending_date"][4]),
+                                                         month=r["ending_datetime"][1],
+                                                         day=r["ending_datetime"][2],
+                                                         hour=r["ending_datetime"][3],
+                                                         minute=r["ending_datetime"][4]),
                                 matchs=matchs))
         return rounds
 
@@ -156,7 +156,8 @@ class Controller(metaclass=Singleton):
                                           time_control=t["time_control"],
                                           players=players,
                                           nb_rounds=t["nb_rounds"],
-                                          description=t["description"]))
+                                          description=t["description"],
+                                          rounds=rounds))
         return tournaments
 
     def get_tournament_by_id(self, id: int):
