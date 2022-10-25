@@ -42,7 +42,7 @@ class Controller(metaclass=Singleton):
         player = Player(len(self.players) + 1, name, first_name, dob, sex, rank)
         self.players.append(player)
         print("joueur: " + player.first_name + " " + player.name + " crée avec succès")
-        self.save("players", player.serialized)
+        self.save("players", player.serialized())
         print("joueur: " + player.first_name + " " + player.name + " sauvegardé avec succès")
 
     def load_players(self):
@@ -51,9 +51,9 @@ class Controller(metaclass=Singleton):
             players.append(Player(id=p["id"],
                                   name=p["name"],
                                   first_name=p["first_name"],
-                                  date_of_birth=date(p["date_of_birth"][0],
-                                                     p["date_of_birth"][1],
-                                                     p["date_of_birth"][2]),
+                                  dob=date(p["dob"][0],
+                                           p["dob"][1],
+                                           p["dob"][2]),
                                   sex=p["sex"],
                                   rank=p["rank"]))
         return players
@@ -69,16 +69,16 @@ class Controller(metaclass=Singleton):
     def create_match(self, round, players, scores):
         match = Match(len(self.matchs) + 1, players, scores)
         self.matchs.append(match)
-        Controller().save("matchs", match.serialized)
+        Controller().save("matchs", match.serialized())
         round.matchs.append(match)
-        Controller().update("rounds", round.serialized)
+        Controller().update("rounds", round.serialized())
 
     def load_matchs(self):
         matchs = []
         for m in self.matchDB:
             players = []
             for p in m["players"]:
-                players.append(self.get_player_by_id(m))
+                players.append(self.get_player_by_id(p))
             matchs.append(Match(id=m["id"],
                                 players=players,
                                 scores=m["scores"]))
@@ -95,9 +95,10 @@ class Controller(metaclass=Singleton):
     def create_round(self, tournament, name, starting_date):
         round = Round(len(self.rounds) + 1, name, starting_date)
         self.rounds.append(round)
-        Controller().save("rounds", round.serialized)
+        Controller().save("rounds", round.serialized())
         tournament.rounds.append(round)
-        Controller().update("tournaments", tournament.serialized)
+        Controller().update("tournaments", tournament.serialized())
+        return round
 
     def load_rounds(self):
         rounds = []
@@ -107,9 +108,16 @@ class Controller(metaclass=Singleton):
                 matchs.append(self.get_match_by_id(m))
             rounds.append(Round(id=r["id"],
                                 name=r["name"],
-                                starting_date=date(r["starting_date"][0],
-                                                   r["starting_date"][1],
-                                                   r["starting_date"][2]),
+                                starting_datetime=datetime(year=r["starting_datetime"][0],
+                                                           month=r["starting_date"][1],
+                                                           day=r["starting_date"][2],
+                                                           hour=r["starting_date"][3],
+                                                           minute=r["starting_date"][4]),
+                                ending_datetime=datetime(year=r["ending_datetime"][0],
+                                                         month=r["ending_date"][1],
+                                                         day=r["ending_date"][2],
+                                                         hour=r["ending_date"][3],
+                                                         minute=r["ending_date"][4]),
                                 matchs=matchs))
         return rounds
 
@@ -139,9 +147,12 @@ class Controller(metaclass=Singleton):
             tournaments.append(Tournament(id=t["id"],
                                           name=t["name"],
                                           place=t["place"],
-                                          starting_date=date(t["starting_date"][0],
-                                                             t["starting_date"][1],
-                                                             t["starting_date"][2]),
+                                          starting_date=date(year=t["starting_date"][0],
+                                                             month=t["starting_date"][1],
+                                                             day=t["starting_date"][2]),
+                                          ending_date=date(year=t["ending_date"][0],
+                                                           month=t["ending_date"][1],
+                                                           day=t["ending_date"][2]),
                                           time_control=t["time_control"],
                                           players=players,
                                           nb_rounds=t["nb_rounds"],

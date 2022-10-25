@@ -1,4 +1,3 @@
-from models.player import Player
 from models.singleton import Singleton
 from views.view import View
 
@@ -12,7 +11,6 @@ class CreatePlayer(View, metaclass=Singleton):
         sex = self.sex_input()
         rank = self.rank_input()
         Controller().create_player(name, first_name, dob, sex, rank)
-
 
     # Inputs
     def dob_input(self):
@@ -45,14 +43,36 @@ class CreatePlayer(View, metaclass=Singleton):
                 print("Veuillez entrer une valeur numérique valide.")
     ##################################################################
 
+
 class LoadPlayer(View, metaclass=Singleton):
     def show(self):
         from controllers.controller import Controller
-        print("Voici la liste des joueurs:")
-        for p in Controller().players:
-            print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " + p.date_of_birth.strftime("%d/%m/%Y")
-                  + " | sexe: " + p.sex + " | classement: " + str(p.rank))
-        self.leave_input()
+        while True:
+            players = []
+            user_input = self.sort_input()
+            if user_input == "0":
+                players = self.alphabetical_sort(Controller().players)
+            elif user_input == "1":
+                players = self.rank_sort(Controller().players)
+            elif user_input == "r":
+                break
+            print("Voici la liste des joueurs:")
+            for p in players:
+                print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " +
+                      p.dob.strftime("%d/%m/%Y") + " | sexe: " + p.sex + " | classement: " + str(p.rank))
+            self.leave_input()
+
+    @staticmethod
+    def sort_input():
+        while True:
+            value = input("Comment voulez-vous trier les joueurs ?\n"
+                          "0 - par odre alphabétique\n"
+                          "1 - par classement\n"
+                          "r - retour\n>")
+            if value in ["0", "1", "r"]:
+                return value
+            else:
+                print("Veuillez entrer r pour quitter")
 
     @staticmethod
     def leave_input():

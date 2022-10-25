@@ -1,5 +1,9 @@
+from datetime import *
+
+
 class Tournament:
-    def __init__(self, id, name, place, starting_date, time_control, players, nb_rounds=4, description="", rounds=[]):
+    def __init__(self, id, name, place, starting_date, time_control, players, nb_rounds=4, description="", rounds=None,
+                 ending_date=None):
         self.id = id
         self.name = name
         self.place = place
@@ -7,9 +11,11 @@ class Tournament:
         self.time_control = time_control
         self.players = players
         self.nb_rounds = nb_rounds
-        self.rounds = rounds
         self.description = description
-        self.is_finished = False
+        if rounds is None:
+            self.rounds = []
+        if ending_date is None:
+            self.ending_date = date(year=1, month=1, day=1)
 
     def serialized(self):
         players_id = []
@@ -22,13 +28,24 @@ class Tournament:
             "id": self.id,
             "name": self.name,
             "place": self.place,
-            "starting_date": [self.starting_date.year, self.starting_date.month, self.starting_date.day],
+            "starting_date": [self.starting_date.year,
+                              self.starting_date.month,
+                              self.starting_date.day],
             "time_control": self.time_control,
             "players": players_id,
             "nb_rounds": self.nb_rounds,
             "description": self.description,
-            "rounds": rounds_id
+            "rounds": rounds_id,
+            "ending_date": [self.ending_date.year,
+                            self.ending_date.month,
+                            self.ending_date.day]
         }
+    def has_played_together(self, player1, player2):
+        for r in self.rounds:
+            for m in r.matchs:
+                if (player1 in m.players) and (player2 in m.players):
+                    return True
+        return False
 
     def __str__(self):
         return str(self.id) + " - " + self.name + " | " + self.place
