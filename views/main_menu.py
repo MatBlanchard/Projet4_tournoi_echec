@@ -25,7 +25,9 @@ class MainMenu(View, metaclass=Singleton):
             elif user_input == "2":
                 CreatePlayer().show()
             elif user_input == "3":
-                LoadPlayer().show()
+                report_input = self.report_input()
+                if report_input == "0":
+                    LoadPlayer().show()
             elif user_input == "q" or user_input == "Q":
                 break
 
@@ -58,3 +60,14 @@ class MainMenu(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
                 continue
+
+    @staticmethod
+    def report_input():
+        while True:
+            value = input("Quel rapport voulez-vous voir ?\n"
+                          "0 - Liste des joueurs\n"
+                          "r - Retour\n> ")
+            if value in ["0", "1", "2", "3", "4", "q", "Q"]:
+                return value
+            else:
+                print("Veuillez entrer une valeur valide")

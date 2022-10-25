@@ -41,7 +41,6 @@ class LoadTournament(View, metaclass=Singleton):
                     Controller().update("rounds", round.serialized())
             tournament.ending_date = date.today()
             Controller().update("tournaments", tournament.serialized())
-
         else:
             print("tournoi terminé")
 

@@ -52,11 +52,13 @@ class LoadPlayer(View, metaclass=Singleton):
             user_input = self.sort_input()
             if user_input == "0":
                 players = self.alphabetical_sort(Controller().players)
+                sort = "par ordre alphabétique"
             elif user_input == "1":
                 players = self.rank_sort(Controller().players)
+                sort = "par classement"
             elif user_input == "r":
                 break
-            print("Voici la liste des joueurs:")
+            print("Voici la liste des joueurs " + sort + ":")
             for p in players:
                 print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " +
                       p.dob.strftime("%d/%m/%Y") + " | sexe: " + p.sex + " | classement: " + str(p.rank))
@@ -66,13 +68,13 @@ class LoadPlayer(View, metaclass=Singleton):
     def sort_input():
         while True:
             value = input("Comment voulez-vous trier les joueurs ?\n"
-                          "0 - par odre alphabétique\n"
-                          "1 - par classement\n"
-                          "r - retour\n>")
+                          "0 - Par odre alphabétique\n"
+                          "1 - Par classement\n"
+                          "r - Retour\n>")
             if value in ["0", "1", "r"]:
                 return value
             else:
-                print("Veuillez entrer r pour quitter")
+                print("Veuillez entrer une valeur valide")
 
     @staticmethod
     def leave_input():
@@ -81,4 +83,4 @@ class LoadPlayer(View, metaclass=Singleton):
             if value == "r":
                 return value
             else:
-                print("Veuillez entrer r pour quitter")
+                print("Veuillez entrer r pour revenir en arriere")
