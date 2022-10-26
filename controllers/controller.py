@@ -6,7 +6,7 @@ from models.singleton import Singleton
 from views.main_menu import MainMenu
 import os
 from tinydb import TinyDB, where
-from datetime import *
+from datetime import datetime, date
 
 
 class Controller(metaclass=Singleton):
@@ -64,7 +64,7 @@ class Controller(metaclass=Singleton):
             if p.id == id:
                 return p
 
-    ####################################################################################################################
+    ###################################################################################################################
 
     # Sauvegarde et chargement des matchs
     def create_match(self, round, players, scores):
@@ -90,7 +90,7 @@ class Controller(metaclass=Singleton):
             if m.id == id:
                 return m
 
-    ####################################################################################################################
+    ###################################################################################################################
 
     # Sauvegarde et chargement des rondes
     def create_round(self, tournament, name, starting_date):
@@ -127,7 +127,7 @@ class Controller(metaclass=Singleton):
             if p.id == id:
                 return p
 
-    ####################################################################################################################
+    ###################################################################################################################
 
     # Sauvegarde et chargement des Tournois
     def create_tournament(self, name, place, starting_date, time_control, players, nb_rounds, description):
@@ -165,4 +165,4 @@ class Controller(metaclass=Singleton):
         for t in self.tournaments:
             if t.id == id:
                 return t
-    ####################################################################################################################
+    ###################################################################################################################

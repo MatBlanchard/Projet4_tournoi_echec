@@ -1,6 +1,6 @@
 from views.view import View
 from models.singleton import Singleton
-from datetime import *
+from datetime import datetime, date
 
 
 class LoadTournament(View, metaclass=Singleton):
