@@ -53,9 +53,9 @@ class ReportView(View, metaclass=Singleton):
                         print("Il n'y a aucun match joué dans ce tournoi")
                     else:
                         for r in tournament_input.rounds:
-                            print(" " + r.name.capitalize() + ":")
+                            print(r.name.capitalize() + ":")
                             for m in r.matchs:
-                                print(m)
+                                print(" " + m)
                         self.leave_input()
             elif report_input in ["r", "R"]:
                 break
