@@ -6,7 +6,9 @@ from datetime import *
 class LoadTournament(View, metaclass=Singleton):
     def show(self, tournament):
         from controllers.controller import Controller
-        if tournament.ending_date.year == 1:
+        modify_ranks = False
+        if tournament.status == "in progress":
+            modify_ranks = True
             for i in range(tournament.nb_rounds):
                 if len(tournament.rounds) == i:
                     name = "ronde " + str(i + 1)
@@ -26,7 +28,9 @@ class LoadTournament(View, metaclass=Singleton):
         if self.display_tournament_result(tournament) == "quit":
             return None
         else:
-            self.update_rank(tournament.players)
+            if modify_ranks:
+                if self.rank_input() in ["y", "Y"]:
+                    self.update_rank(tournament.players)
 
     @staticmethod
     def score_input(players_pair):
@@ -67,15 +71,6 @@ class LoadTournament(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer Y ou N")
 
-    @staticmethod
-    def continue_input():
-        while True:
-            value = input("Y - Continuer\n"
-                          "N - Quitter\n>")
-            if value in ["y", "Y", "n", "N"]:
-                return value
-            else:
-                print("Veuillez entrer Y ou N")
 
     @staticmethod
     def update_rank_input():
@@ -87,17 +82,14 @@ class LoadTournament(View, metaclass=Singleton):
                 print("Veuillez entrer Y ou N")
 
     @staticmethod
-    def rank_input(player):
+    def continue_input():
         while True:
-            value = input("Joueur:" + player.first_name + " " + player.name + "\n"
-                          "Nouveau classement:\n>")
-            if value.isnumeric():
-                if int(value) > 0:
-                    return int(value)
-                else:
-                    print("Veuillez entrer une valeur supérieure à 0")
+            value = input("Y - Continuer\n"
+                          "N - Quitter\n>")
+            if value in ["y", "Y", "n", "N"]:
+                return value
             else:
-                print("Veuillez entrer une valeur numérique valide.")
+                print("Veuillez entrer Y ou N")
     ####################################################################################################################
 
     def get_pair(self, tournament, round, match_num, nb_matchs):
@@ -130,34 +122,26 @@ class LoadTournament(View, metaclass=Singleton):
                     return "quit"
                 scores = self.score_input(players_pair)
                 Controller().create_match(round, players_pair, scores)
-        if round.ending_datetime.year == 1:
+        if round.status == "in progress":
             round.ending_datetime = datetime.now()
             Controller().update("rounds", round.serialized())
-            if self.display_round_result(round) == "quit":
+            self.display_round_result(round)
+            if self.continue_input() in ["n", "N"]:
                 return "quit"
-
-    def display_round_result(self, round):
-        print("Résultats " + round.name + " | début: " + round.starting_datetime.strftime("%d-%m-%Y %H:%M") +
-              " | fin: " + round.ending_datetime.strftime("%d-%m-%Y %H:%M"))
-        for m in round.matchs:
-            print(m)
-        if self.continue_input() in ["n", "N"]:
-            return "quit"
 
     def display_tournament_result(self, tournament):
         print("Résultats " + tournament.name + " | début: " + tournament.starting_date.strftime("%d-%m-%Y") +
               " | fin: " + tournament.ending_date.strftime("%d-%m-%Y"))
         for r in tournament.rounds:
             self.display_round_result(r)
+            if self.continue_input() in ["n", "N"]:
+                return "quit"
         players = self.score_sort(tournament)
         print("Scores des joueurs:")
         for p in players:
             print(p.first_name + " " + p.name + ": " + str(p.get_score(tournament)))
-        if self.update_rank_input() in ["n", "N"]:
-            return "quit"
 
-    def update_rank(self, players):
-        from controllers.controller import Controller
+    def update_ranks(self, players):
         for p in players:
-            p.rank = self.rank_input(p)
-            Controller().update("players", p)
+            self.update_rank(p)
+

@@ -9,6 +9,61 @@ class View:
         values = value.split("-")
         return date(int(values[2]), int(values[1]), int(values[0]))
 
+    @staticmethod
+    def leave_input():
+        while True:
+            value = input("r - retour:\n>")
+            if value in ["r", "R"]:
+                return value
+            else:
+                print("Veuillez entrer r pour revenir en arriere")
+
+    @staticmethod
+    def rank_input(player):
+        while True:
+            value = input("Joueur: " + player.first_name + " " + player.name + " (" + str(player.rank) + ")\n"
+                          "Nouveau classement:\n>")
+            if value.isnumeric():
+                if int(value) > 0:
+                    return int(value)
+                else:
+                    print("Veuillez entrer une valeur supérieure à 0")
+            else:
+                print("Veuillez entrer une valeur numérique valide.")
+
+    def tournament_input(self, display):
+        from controllers.controller import Controller
+        while True:
+            assertions = []
+            for t in Controller().tournaments:
+                display += str(t) + "\n"
+                assertions.append(str(t.id))
+            assertions.append("r")
+            assertions.append("R")
+            value = input(display + "r - Retour\n>")
+            if value in ["r", "R"]:
+                return "quit"
+            if value in assertions:
+                return Controller().get_tournament_by_id(int(value))
+            else:
+                print("Veuillez entrer une valeur valide")
+                continue
+
+    def update_rank(self, player):
+        from controllers.controller import Controller
+        player.rank = self.rank_input(player)
+        Controller().update("players", player)
+
+    def display_round_result(self, round):
+        if round.status == "in progress":
+            fin = "en cours"
+        else:
+            fin = round.ending_datetime.strftime("%d/%m/%Y %H:%M")
+        print("Résultats " + round.name + " | début: " + round.starting_datetime.strftime("%d-%m-%Y %H:%M") +
+              " | fin: " + fin)
+        for m in round.matchs:
+            print(m)
+
     # Sorting
     def rank_sorted(self, players):
         for i in range(len(players) - 1):

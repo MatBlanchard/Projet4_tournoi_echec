@@ -34,9 +34,14 @@ class CreateTournament(View, metaclass=Singleton):
             value = input("Cadence du tournoi:\n"
                           "0 - Bullet\n"
                           "1 - Blitz\n"
-                          "2 - Rapide\n>")
+                          "2 - Rapid\n>")
             if value in ["0", "1", "2"]:
-                return value
+                if value == "0":
+                    return "Bullet"
+                elif value == "1":
+                    return "Blitz"
+                elif value == "2":
+                    return "Rapid"
             else:
                 print("Veuillez entrer une valeur valide")
 

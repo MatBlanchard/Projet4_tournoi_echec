@@ -18,6 +18,13 @@ class Tournament:
             self.rounds = rounds
         self.ending_date = ending_date
 
+    @property
+    def status(self):
+        if self.ending_date.year == 1:
+            return "in progress"
+        else:
+            return "finished"
+
     def serialized(self):
         players_id = []
         for p in self.players:
@@ -41,6 +48,8 @@ class Tournament:
                             self.ending_date.month,
                             self.ending_date.day]
         }
+
+
     def has_played(self, player1, player2):
         for r in self.rounds:
             for m in r.matchs:

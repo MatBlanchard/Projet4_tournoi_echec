@@ -45,21 +45,20 @@ class CreatePlayer(View, metaclass=Singleton):
 
 
 class LoadPlayer(View, metaclass=Singleton):
-    def show(self):
-        from controllers.controller import Controller
+    def show(self, players):
         while True:
-            players = []
+            sorted_players = []
             user_input = self.sort_input()
             if user_input == "0":
-                players = self.alphabetical_sort(Controller().players)
+                sorted_players = self.alphabetical_sort(players)
                 sort = "par ordre alphabétique"
             elif user_input == "1":
-                players = self.rank_sort(Controller().players)
+                sorted_players = self.rank_sort(players)
                 sort = "par classement"
-            elif user_input == "r":
+            elif user_input in ["r", "R"]:
                 break
             print("Voici la liste des joueurs " + sort + ":")
-            for p in players:
+            for p in sorted_players:
                 print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " +
                       p.dob.strftime("%d/%m/%Y") + " | sexe: " + p.sex + " | classement: " + str(p.rank))
             self.leave_input()
@@ -71,16 +70,8 @@ class LoadPlayer(View, metaclass=Singleton):
                           "0 - Par odre alphabétique\n"
                           "1 - Par classement\n"
                           "r - Retour\n>")
-            if value in ["0", "1", "r"]:
+            if value in ["0", "1", "r", "R"]:
                 return value
             else:
                 print("Veuillez entrer une valeur valide")
 
-    @staticmethod
-    def leave_input():
-        while True:
-            value = input("r - retour:\n>")
-            if value == "r":
-                return value
-            else:
-                print("Veuillez entrer r pour revenir en arriere")

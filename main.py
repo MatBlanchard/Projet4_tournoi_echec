@@ -1,4 +1,7 @@
 from controllers.controller import Controller
 
 if __name__ == "__main__":
-    Controller().start()
+    try:
+        Controller().start()
+    except KeyboardInterrupt:
+        print("\nFin du programme")

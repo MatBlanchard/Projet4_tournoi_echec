@@ -13,6 +13,13 @@ class Round:
             self.matchs = matchs
         self.ending_datetime = ending_datetime
 
+    @property
+    def status(self):
+        if self.ending_datetime.year == 1:
+            return "in progress"
+        else:
+            return "finished"
+
     def serialized(self):
         matchs_id = []
         for m in self.matchs:
@@ -38,3 +45,11 @@ class Round:
             if player in m.players:
                 return True
         return False
+
+    def __str__(self):
+        if self.status == "in progress":
+            fin = "en cours"
+        else:
+            fin = self.ending_datetime.strftime("%d/%m/%Y %H:%M")
+        return (str(self.id) + " - " + self.name.capitalize() + " | début: " + self.starting_datetime.strftime("%d/%m/%Y %H:%M") + " | fin: "
+                + self.ending_datetime.strftime("%d/%m/%Y %H:%M"))
