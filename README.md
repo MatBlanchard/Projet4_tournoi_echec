@@ -5,27 +5,27 @@ Commencez tout d'abord par installer Python.
 ```
 https://www.python.org/downloads/
 ```
-Lancez ensuite la console, placez vous dans le dossier de votre choix puis clonez ce repository:
+- Lancez ensuite la console, placez vous dans le dossier de votre choix puis clonez ce repository:
 ```
 git clone https://github.com/MatBlanchard/Projet4_tournoi_echec.git
 ```
-Déplacez vous dans le repository:
+- Déplacez vous dans le repository:
 ```
 cd Projet4_tournoi_echec
 ```
-Créez un nouvel environnement virtuel:
+- Créez un nouvel environnement virtuel:
 ```
 python -m venv env
 ```
-Activez le.
+- Activez le.
 ```
 env\scripts\activate.bat
 ```
-Installez les packages.
+- Installez les packages.
 ```
 pip install -r requirements.txt
 ```
-Vous pouvez enfin lancer le script:
+- Vous pouvez enfin lancer le script:
 ```
 python main.py
 ```
