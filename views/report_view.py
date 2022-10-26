@@ -12,7 +12,7 @@ class ReportView(View, metaclass=Singleton):
             if report_input == "0":
                 LoadPlayer().show(Controller().players)
             elif report_input == "1":
-                tournament_input = self.tournaments_input("De quel tournoi voulez-vous voir les joueurs?\n")
+                tournament_input = self.tournament_input("De quel tournoi voulez-vous voir les joueurs?\n")
                 if tournament_input != "quit":
                     LoadPlayer().show(tournament_input.players)
             elif report_input == "2":
@@ -25,8 +25,8 @@ class ReportView(View, metaclass=Singleton):
                         else:
                             fin = t.ending_date.strftime("%d/%m/%Y")
                         print("nom: " + t.name + " | lieu: " + t.place + " | début: " +
-                              t.starting_date.strftime("%d/%m/%Y") + " | fin: " + fin + " | cadence: " + t.time_control +
-                              " | nb joueurs: " + str(len(t.players)) +
+                              t.starting_date.strftime("%d/%m/%Y") + " | fin: " + fin + " | cadence: " + t.time_control
+                              + " | nb joueurs: " + str(len(t.players)) +
                               " | nb tours: " + str(t.nb_rounds) + " | description: " + t.description)
                 self.leave_input()
             elif report_input == "3":
@@ -74,7 +74,8 @@ class ReportView(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
 
-    def rounds_input(self, rounds):
+    @staticmethod
+    def rounds_input(rounds):
         from controllers.controller import Controller
         while True:
             display = "De quelle ronde voulez-vous voir les détails?\n"

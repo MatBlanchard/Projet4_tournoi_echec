@@ -1,5 +1,3 @@
-
-
 class Match:
     def __init__(self, id, players, scores):
         self.id = id

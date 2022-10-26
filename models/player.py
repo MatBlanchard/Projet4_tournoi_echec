@@ -26,5 +26,6 @@ class Player:
                 elif m.players[1] == self:
                     score += m.scores[1]
         return score
+
     def __str__(self):
         return str(self.id) + " - " + self.name + " | " + self.first_name

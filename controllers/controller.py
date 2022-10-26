@@ -23,7 +23,8 @@ class Controller(metaclass=Singleton):
         self.rounds = self.load_rounds()
         self.tournaments = self.load_tournaments()
 
-    def start(self):
+    @staticmethod
+    def start():
         MainMenu().show()
 
     def save(self, table_name, data):

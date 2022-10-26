@@ -9,7 +9,7 @@ class CreatePlayer(View, metaclass=Singleton):
         first_name = input("Prénom du joueur:\n>")
         dob = self.dob_input()
         sex = self.sex_input()
-        rank = self.rank_input()
+        rank = self.player_rank_input()
         Controller().create_player(name, first_name, dob, sex, rank)
 
     # Inputs
@@ -31,7 +31,7 @@ class CreatePlayer(View, metaclass=Singleton):
                 print("Veuillez entrer H ou F")
 
     @staticmethod
-    def rank_input():
+    def player_rank_input():
         while True:
             value = input("Classement:\n>")
             if value.isnumeric():
@@ -49,6 +49,7 @@ class LoadPlayer(View, metaclass=Singleton):
         while True:
             sorted_players = []
             user_input = self.sort_input()
+            sort = ""
             if user_input == "0":
                 sorted_players = self.alphabetical_sort(players)
                 sort = "par ordre alphabétique"
@@ -74,4 +75,3 @@ class LoadPlayer(View, metaclass=Singleton):
                 return value
             else:
                 print("Veuillez entrer une valeur valide")
-

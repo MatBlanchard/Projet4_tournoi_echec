@@ -31,7 +31,8 @@ class View:
             else:
                 print("Veuillez entrer une valeur numérique valide.")
 
-    def tournament_input(self, display):
+    @staticmethod
+    def tournament_input(display):
         from controllers.controller import Controller
         while True:
             assertions = []
@@ -54,7 +55,8 @@ class View:
         player.rank = self.rank_input(player)
         Controller().update("players", player)
 
-    def display_round_result(self, round):
+    @staticmethod
+    def display_round_result(round):
         if round.status == "in progress":
             fin = "en cours"
         else:
@@ -65,7 +67,8 @@ class View:
             print(m)
 
     # Sorting
-    def rank_sorted(self, players):
+    @staticmethod
+    def rank_sorted(players):
         for i in range(len(players) - 1):
             if players[i].rank < players[i + 1].rank:
                 return False
@@ -80,7 +83,8 @@ class View:
                     players[i + 1] = temp
         return players
 
-    def score_sorted(self, tournament):
+    @staticmethod
+    def score_sorted(tournament):
         for i in range(len(tournament.players) - 1):
             if tournament.players[i].get_score(tournament) < tournament.players[i+1].get_score(tournament):
                 return False
@@ -103,7 +107,8 @@ class View:
                     tournament.players[i + 1] = temp
         return tournament.players
 
-    def alphabetical_sorted(self, players):
+    @staticmethod
+    def alphabetical_sorted(players):
         for i in range(len(players) - 1):
             if players[i].name > players[i + 1].name:
                 return False

@@ -49,7 +49,6 @@ class Tournament:
                             self.ending_date.day]
         }
 
-
     def has_played(self, player1, player2):
         for r in self.rounds:
             for m in r.matchs:

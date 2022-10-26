@@ -1,4 +1,3 @@
-from models.tournament import Tournament
 from views.view import View
 from models.singleton import Singleton
 
@@ -29,7 +28,8 @@ class CreateTournament(View, metaclass=Singleton):
             except ValueError:
                 print("Veuillez entrer une date au format valide: DD-MM-YYYY")
 
-    def time_control_input(self):
+    @staticmethod
+    def time_control_input():
         while True:
             value = input("Cadence du tournoi:\n"
                           "0 - Bullet\n"
@@ -45,7 +45,8 @@ class CreateTournament(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
 
-    def nb_players_input(self):
+    @staticmethod
+    def nb_players_input():
         from controllers.controller import Controller
         while True:
             value = input("Combien de joueurs voulez-vous ajouter ?\n>")
@@ -63,7 +64,8 @@ class CreateTournament(View, metaclass=Singleton):
                 continue
             return int(value)
 
-    def players_input(self, nb_players):
+    @staticmethod
+    def players_input(nb_players):
         from controllers.controller import Controller
         while True:
             players = []
@@ -82,7 +84,8 @@ class CreateTournament(View, metaclass=Singleton):
                     continue
             return players
 
-    def nb_rounds_input(self, nb_players):
+    @staticmethod
+    def nb_rounds_input(nb_players):
         while True:
             if nb_players == 2:
                 return 1
@@ -96,7 +99,8 @@ class CreateTournament(View, metaclass=Singleton):
                 else:
                     print("Veuillez entrer une valeur numérique valide.")
 
-    def play_input(self):
+    @staticmethod
+    def play_input():
         while True:
             value = input("Jouer le tournoi? (Y/N)\n>")
             if value in ["y", "Y", "n", "N"]:
@@ -107,4 +111,3 @@ class CreateTournament(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
     ###################################################################################################################
-

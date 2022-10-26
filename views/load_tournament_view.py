@@ -29,9 +29,10 @@ class LoadTournament(View, metaclass=Singleton):
             return None
         else:
             if modify_ranks:
-                if self.rank_input() in ["y", "Y"]:
-                    self.update_rank(tournament.players)
+                if self.continue_input() in ["y", "Y"]:
+                    self.update_ranks(tournament.players)
 
+    # Inputs
     @staticmethod
     def score_input(players_pair):
         while True:
@@ -63,14 +64,14 @@ class LoadTournament(View, metaclass=Singleton):
     @staticmethod
     def match_input(round_name, players_pair):
         while True:
-            value = input(round_name.capitalize() + ": " + players_pair[0].name + " (" + str(players_pair[0].rank) + ") "
-                          "vs " + players_pair[1].name + " (" + str(players_pair[1].rank) + ")\n"
+            value = input(round_name.capitalize() + ": " + players_pair[0].name + " (" +
+                          str(players_pair[0].rank) + ") vs " + players_pair[1].name + " (" +
+                          str(players_pair[1].rank) + ")\n"
                           "Jouer le match? (Y/N) \n>")
             if value in ["y", "Y", "n", "N"]:
                 return value
             else:
                 print("Veuillez entrer Y ou N")
-
 
     @staticmethod
     def update_rank_input():
@@ -90,7 +91,7 @@ class LoadTournament(View, metaclass=Singleton):
                 return value
             else:
                 print("Veuillez entrer Y ou N")
-    ####################################################################################################################
+    ###################################################################################################################
 
     def get_pair(self, tournament, round, match_num, nb_matchs):
         if round.name == "ronde 1":
@@ -111,6 +112,7 @@ class LoadTournament(View, metaclass=Singleton):
             for p in players:
                 if p is not player_one:
                     return [player_one, p]
+
     def play_round(self, tournament, round):
         from controllers.controller import Controller
         nb_matchs = int(len(tournament.players) / 2)
@@ -144,4 +146,3 @@ class LoadTournament(View, metaclass=Singleton):
     def update_ranks(self, players):
         for p in players:
             self.update_rank(p)
-
