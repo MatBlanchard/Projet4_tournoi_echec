@@ -16,6 +16,7 @@ class ReportView(View, metaclass=Singleton):
                 if tournament_input != "quit":
                     LoadPlayer().show(tournament_input.players)
             elif report_input == "2":
+                print("Voici la liste des tournois")
                 if len(Controller().tournaments) == 0:
                     print("Il n'y a aucun tournoi dans la base de données")
                 else:
