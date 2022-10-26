@@ -30,10 +30,6 @@ pip install -r requirements.txt
 python main.py
 ```
 ## Générer le rapport flake8
-- Installez flake8 avec la commande: 
-```
-pip install flake8-html
-```
 - Tapez la commande:
 ```
 flake8 --format=html --htmldir=flake-report
