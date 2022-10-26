@@ -29,3 +29,13 @@ Vous pouvez enfin lancer le script:
 ```
 python main.py
 ```
+## Générer le rapport flake8
+- Installez flake8 avec la commande: 
+```
+pip install flake8-html
+```
+- Tapez la commande:
+```
+flake8 --format=html --htmldir=flake-report
+```
+- Le rapport sera généré dans le dossier flake-report
