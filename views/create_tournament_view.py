@@ -90,12 +90,14 @@ class CreateTournament(View, metaclass=Singleton):
             if nb_players == 2:
                 return 1
             else:
-                value = input("Nombre de tour :\n>")
+                value = input("Nombre de tour (4 par défaut):\n>")
+                if nb_players > 4 and value == "":
+                    return 4
                 if value.isnumeric():
-                    if 0 < int(value) <= nb_players:
+                    if int(value) > 0:
                         return int(value)
                     else:
-                        print("Veuillez entrer une valeur entre 1 et " + str(nb_players-1))
+                        print("Veuillez entrer une valeur supérieure à 0")
                 else:
                     print("Veuillez entrer une valeur numérique valide.")
 
