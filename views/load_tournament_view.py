@@ -111,7 +111,8 @@ class LoadTournament(View, metaclass=Singleton):
                             return [player_one, p]
             for p in players:
                 if p is not player_one:
-                    return [player_one, p]
+                    if not round.has_played(p):
+                        return [player_one, p]
 
     def play_round(self, tournament, round):
         from controllers.controller import Controller
