@@ -3,7 +3,7 @@ from views.create_tournament_view import CreateTournament
 from views.load_tournament_view import LoadTournament
 from views.report_view import ReportView
 from views.view import View
-from views.player_view import CreatePlayer, LoadPlayer
+from views.player_view import CreatePlayer
 
 
 class MainMenu(View, metaclass=Singleton):
@@ -50,7 +50,8 @@ class MainMenu(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
 
-    def player_input(self):
+    @staticmethod
+    def player_input():
         from controllers.controller import Controller
         while True:
             display = "De quel joueur voulez-vous modifier le classement?\n"
@@ -64,7 +65,3 @@ class MainMenu(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
                 continue
-
-
-
-
