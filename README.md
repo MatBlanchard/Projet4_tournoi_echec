@@ -56,4 +56,5 @@ Le menu principal est divisé en 5 options.
 ```
 flake8 --format=html --htmldir=flake-report
 ```
+- Vous devez, au prélable, avoir installé les packages
 - Le rapport sera généré dans le dossier flake-report
