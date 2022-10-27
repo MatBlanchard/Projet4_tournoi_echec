@@ -50,6 +50,6 @@ class Round:
         if self.status == "in progress":
             fin = "en cours"
         else:
-            fin = self.ending_datetime.strftime("%d/%m/%Y %H:%M")
+            fin = self.ending_datetime.strftime("%d-%m-%Y %H:%M")
         return (str(self.id) + " - " + self.name.capitalize() + " | début: "
-                + self.starting_datetime.strftime("%d/%m/%Y %H:%M") + " | fin: " + fin)
+                + self.starting_datetime.strftime("%d-%m-%Y %H:%M") + " | fin: " + fin)

@@ -50,13 +50,12 @@ class MainMenu(View, metaclass=Singleton):
             else:
                 print("Veuillez entrer une valeur valide")
 
-    @staticmethod
-    def player_input():
+    def player_input(self):
         from controllers.controller import Controller
         while True:
             display = "De quel joueur voulez-vous modifier le classement?\n"
             assertions = []
-            for p in Controller().players:
+            for p in self.id_sort(Controller().players):
                 display += str(p) + "\n"
                 assertions.append(str(p.id))
             value = input(display + ">")

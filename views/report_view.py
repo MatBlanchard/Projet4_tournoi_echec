@@ -55,7 +55,7 @@ class ReportView(View, metaclass=Singleton):
                         for r in tournament_input.rounds:
                             print(r.name.capitalize() + ":")
                             for m in r.matchs:
-                                print(" " + m)
+                                print(" " + str(m))
                         self.leave_input()
             elif report_input in ["r", "R"]:
                 break

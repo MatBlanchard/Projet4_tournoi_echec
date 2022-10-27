@@ -29,7 +29,7 @@ class LoadTournament(View, metaclass=Singleton):
             return None
         else:
             if modify_ranks:
-                if self.continue_input() in ["y", "Y"]:
+                if self.update_rank_input() in ["y", "Y"]:
                     self.update_ranks(tournament.players)
 
     # Inputs
@@ -91,6 +91,7 @@ class LoadTournament(View, metaclass=Singleton):
                 return value
             else:
                 print("Veuillez entrer Y ou N")
+
     ###################################################################################################################
 
     def get_pair(self, tournament, round, match_num, nb_matchs):
@@ -146,4 +147,7 @@ class LoadTournament(View, metaclass=Singleton):
 
     def update_ranks(self, players):
         for p in players:
-            self.update_rank(p)
+            if self.continue_input() in ["y", "Y"]:
+                self.update_rank(p)
+            else:
+                break

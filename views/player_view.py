@@ -61,7 +61,7 @@ class LoadPlayer(View, metaclass=Singleton):
             print("Voici la liste des joueurs " + sort + ":")
             for p in sorted_players:
                 print("nom: " + p.name + " | prénom: " + p.first_name + " | date_naissance: " +
-                      p.dob.strftime("%d/%m/%Y") + " | sexe: " + p.sex + " | classement: " + str(p.rank))
+                      p.dob.strftime("%d-%m-%Y") + " | sexe: " + p.sex + " | classement: " + str(p.rank))
             self.leave_input()
 
     @staticmethod

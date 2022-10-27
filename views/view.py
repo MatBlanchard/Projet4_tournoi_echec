@@ -53,7 +53,7 @@ class View:
     def update_rank(self, player):
         from controllers.controller import Controller
         player.rank = self.rank_input(player)
-        Controller().update("players", player)
+        Controller().update("players", player.serialized())
 
     @staticmethod
     def display_round_result(round):
@@ -65,6 +65,22 @@ class View:
               " | fin: " + fin)
         for m in round.matchs:
             print(m)
+
+    @staticmethod
+    def id_sorted(players):
+        for i in range(len(players) - 1):
+            if players[i].id > players[i + 1].id:
+                return False
+        return True
+
+    def id_sort(self, players):
+        while not self.id_sorted(players):
+            for i in range(len(players) - 1):
+                if players[i].id > players[i + 1].id:
+                    temp = players[i]
+                    players[i] = players[i + 1]
+                    players[i + 1] = temp
+        return players
 
     # Sorting
     @staticmethod
