@@ -1,4 +1,4 @@
-# OpenClassrooms: Projet 4 - Gestion de tournoi d'échec
+# OpenClassrooms : Projet 4 - Gestion de tournoi d'échec
 Ce programe a été réalisé dans le cadre du projet 4 de la formation python d'OpenClassrooms. Il s'agit d'un gestionnaire de tournois d'échecs.
 ## Installation:
 - Commencez tout d'abord par installer Python.
