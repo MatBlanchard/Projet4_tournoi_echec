@@ -18,7 +18,7 @@ python -m venv env
 ```
 - Activez le.
 ```
-env\scripts\activate.bat
+env\scripts\activate
 ```
 - Installez les packages.
 ```
